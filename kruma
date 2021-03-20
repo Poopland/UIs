@@ -7,6 +7,19 @@ local LocalPlayer = game:GetService("Players").LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
 local CloseBind = Enum.KeyCode.RightControl
 
+if _G.run_ui then
+    _G.run_ui = _G.run_ui + 1
+    else
+    _G.run_ui = 1
+end
+
+local localuivalue = _G.run_ui
+
+_G.reloadingui = true
+warn("PLEASE WAIT, REDUCING LAG")
+wait(2)
+_G.reloadingui = false
+
 if game.CoreGui:FindFirstChild("FluxLib") then
     game.CoreGui.FluxLib:Destroy()    
 end
@@ -29,6 +42,7 @@ coroutine.wrap(
 			if Flux.HueSelectionPosition == 80 then
 				Flux.HueSelectionPosition = 0
 			end
+			if _G.reloadingui == true then break end
 		end
 	end
 )()
@@ -53,6 +67,7 @@ local function MakeDraggable(topbarobject, object)
 
 	topbarobject.InputBegan:Connect(
 		function(input)
+		    if localuivalue ~= _G.run_ui then return end
 			if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
 				Dragging = true
 				DragStart = input.Position
@@ -71,6 +86,7 @@ local function MakeDraggable(topbarobject, object)
 
 	topbarobject.InputChanged:Connect(
 		function(input)
+		    if localuivalue ~= _G.run_ui then return end
 			if
 				input.UserInputType == Enum.UserInputType.MouseMovement or
 					input.UserInputType == Enum.UserInputType.Touch
@@ -82,6 +98,7 @@ local function MakeDraggable(topbarobject, object)
 
 	UserInputService.InputChanged:Connect(
 		function(input)
+		    if localuivalue ~= _G.run_ui then return end
 			if input == DragInput and Dragging then
 				Update(input)
 			end
@@ -113,6 +130,7 @@ function gradient(parent,color,anim)
             	end
             end
             create1.Completed:Connect(function() 
+                if localuivalue ~= _G.run_ui then return end
             	if rot == 0 then rot = 180 elseif rot == 180 then rot = 0 end
             	completed()
             end)
@@ -247,6 +265,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 	local uitoggled = false
 	UserInputService.InputBegan:Connect(
 		function(io, p)
+		    if localuivalue ~= _G.run_ui then return end
 			if io.KeyCode == CloseBind then
 				if uitoggled == false then
 					MainFrame:TweenSize(UDim2.new(0, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
@@ -364,6 +383,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 		NotificationDesc.TextTransparency = 1
 		
 		CloseBtn.MouseEnter:Connect(function()
+		    if localuivalue ~= _G.run_ui then return end
 			TweenService:Create(
 				CloseBtn,
 				TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -372,6 +392,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 		end)
 
 		CloseBtn.MouseLeave:Connect(function()
+		    if localuivalue ~= _G.run_ui then return end
 			TweenService:Create(
 				CloseBtn,
 				TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -380,7 +401,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 		end)
 		
 		CloseBtn.MouseButton1Click:Connect(function()
-			
+			if localuivalue ~= _G.run_ui then return end
 			TweenService:Create(
 				NotificationDesc,
 				TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -523,6 +544,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 		end
 		UpdateSize()
 		Tab.MouseButton1Click:Connect(function()
+		    if localuivalue ~= _G.run_ui then return end
 			for i, v in next, ContainerFolder:GetChildren() do
 				if v.Name == "Container" then
 					v.Visible = false
@@ -678,6 +700,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 			end)
 			
 			Button.MouseLeave:Connect(function()
+			    if localuivalue ~= _G.run_ui then return end
 				TweenService:Create(
 					Title,
 					TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -686,10 +709,12 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 			end)
 			
 			Button.MouseButton1Click:Connect(function()
+			    if localuivalue ~= _G.run_ui then return end
 				callback()
 			end)
 			
 			ArrowBtn.MouseButton1Click:Connect(function()
+			    if localuivalue ~= _G.run_ui then return end
 				if BtnDescToggled == false then
 					Button:TweenSize(UDim2.new(0, 457, 0, 74), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
 					TweenService:Create(
@@ -913,6 +938,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 			ArrowIco.ImageTransparency = .3
 			
 		    Toggle.MouseEnter:Connect(function()
+		        if localuivalue ~= _G.run_ui then return end
 				TweenService:Create(
 					Title,
 					TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -921,6 +947,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 			end)
 
 			Toggle.MouseLeave:Connect(function()
+			    if localuivalue ~= _G.run_ui then return end
 				TweenService:Create(
 					Title,
 					TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -929,6 +956,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 			end)
 
 			Toggle.MouseButton1Click:Connect(function()
+			    if localuivalue ~= _G.run_ui then return end
 				if Toggled == false then
 					ToggleCircle:TweenPosition(UDim2.new(0.37, 0,-0.273, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .3, true)
 					TweenService:Create(
@@ -951,6 +979,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 			end)
 			
 			ArrowBtn.MouseButton1Click:Connect(function()
+			    if localuivalue ~= _G.run_ui then return end
 				if ToggleDescToggled == false then
 					Toggle:TweenSize(UDim2.new(0, 457, 0, 74), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
 					TweenService:Create(
@@ -1205,6 +1234,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 			Value.TextXAlignment = Enum.TextXAlignment.Right
 			
 			ArrowBtn.MouseButton1Click:Connect(function()
+			    if localuivalue ~= _G.run_ui then return end
 				if SliderDescToggled == false then
 					Slider:TweenSize(UDim2.new(0, 457, 0, 101), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
 					TweenService:Create(
@@ -1330,6 +1360,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 				end
 				SlideCircle.InputBegan:Connect(
 					function(input)
+					    if localuivalue ~= _G.run_ui then return end
 						if input.UserInputType == Enum.UserInputType.MouseButton1 then
 							dragging = true
 						end
@@ -1337,6 +1368,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 				)
 				SlideCircle.InputEnded:Connect(
 					function(input)
+					    if localuivalue ~= _G.run_ui then return end
 						if input.UserInputType == Enum.UserInputType.MouseButton1 then
 							dragging = false
 						end
@@ -1344,6 +1376,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 				)
 				game:GetService("UserInputService").InputChanged:Connect(
 				function(input)
+				    if localuivalue ~= _G.run_ui then return end
 					if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
 						move(input)
 					end
@@ -1458,6 +1491,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 			DropLayout.Padding = UDim.new(0, 2)
 			
 			Dropdown.MouseEnter:Connect(function()
+			    if localuivalue ~= _G.run_ui then return end
 				TweenService:Create(
 					Title,
 					TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -1466,6 +1500,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 			end)
 
 			Dropdown.MouseLeave:Connect(function()
+			    if localuivalue ~= _G.run_ui then return end
 				TweenService:Create(
 					Title,
 					TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -1475,6 +1510,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 
 			
 			Dropdown.MouseButton1Click:Connect(function()
+			    if localuivalue ~= _G.run_ui then return end
 				if DropToggled == false then
 					Title.Text = Selected
 					Dropdown:TweenSize(UDim2.new(0, 457, 0, FrameSize), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
@@ -1590,6 +1626,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 				DropItemHolder.CanvasSize = UDim2.new(0, 0, 0, DropLayout.AbsoluteContentSize.Y)
 				
 				Item.MouseEnter:Connect(function()
+				    if localuivalue ~= _G.run_ui then return end
 					TweenService:Create(
 						Item,
 						TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -1598,6 +1635,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 				end)
 
 				Item.MouseLeave:Connect(function()
+				    if localuivalue ~= _G.run_ui then return end
 					TweenService:Create(
 						Item,
 						TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -1606,6 +1644,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 				end)
 				
 				Item.MouseButton1Click:Connect(function()
+				    if localuivalue ~= _G.run_ui then return end
 					callback( v)
 					Title.Text = text
 					Selected = v
@@ -1682,6 +1721,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 				DropItemHolder.CanvasSize = UDim2.new(0, 0, 0, DropLayout.AbsoluteContentSize.Y)
 
 				Item.MouseEnter:Connect(function()
+				    if localuivalue ~= _G.run_ui then return end
 					TweenService:Create(
 						Item,
 						TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -1690,6 +1730,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 				end)
 
 				Item.MouseLeave:Connect(function()
+				    if localuivalue ~= _G.run_ui then return end
 					TweenService:Create(
 						Item,
 						TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -1698,6 +1739,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 				end)
 
 				Item.MouseButton1Click:Connect(function()
+				    if localuivalue ~= _G.run_ui then return end
 					callback( addtext)
 					Title.Text = text
 					Selected = addtext
@@ -1742,6 +1784,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 					Container.CanvasSize = UDim2.new(0, 0, 0, ContainerLayout.AbsoluteContentSize.Y)
 				end)
 				if DropToggled == true then
+				    if localuivalue ~= _G.run_ui then return end
 					Title.Text = Selected
 					Dropdown:TweenSize(UDim2.new(0, 457, 0, 43), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
 					TweenService:Create(
@@ -2075,6 +2118,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 			ToggleBtn.TextSize = 14.000
 			
 			ColorpickerBtn.MouseEnter:Connect(function()
+			    if localuivalue ~= _G.run_ui then return end
 				TweenService:Create(
 					Title,
 					TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -2083,6 +2127,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 			end)
 
 			ColorpickerBtn.MouseLeave:Connect(function()
+			    if localuivalue ~= _G.run_ui then return end
 				TweenService:Create(
 					Title,
 					TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -2091,6 +2136,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 			end)
 		 	
 			ColorpickerBtn.MouseButton1Click:Connect(function()
+			    if localuivalue ~= _G.run_ui then return end
 				if ColorPickerToggled == false then
 					ColorSelection.Visible = true
 					HueSelection.Visible = true
@@ -2173,6 +2219,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 
 			Color.InputBegan:Connect(
 				function(input)
+				    if localuivalue ~= _G.run_ui then return end
 					if input.UserInputType == Enum.UserInputType.MouseButton1 then
 						if RainbowColorPicker then
 							return
@@ -2205,6 +2252,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 
 			Color.InputEnded:Connect(
 				function(input)
+				    if localuivalue ~= _G.run_ui then return end
 					if input.UserInputType == Enum.UserInputType.MouseButton1 then
 						if ColorInput then
 							ColorInput:Disconnect()
@@ -2215,6 +2263,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 
 			Hue.InputBegan:Connect(
 				function(input)
+				    if localuivalue ~= _G.run_ui then return end
 					if input.UserInputType == Enum.UserInputType.MouseButton1 then
 						if RainbowColorPicker then
 							return
@@ -2243,6 +2292,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 
 			Hue.InputEnded:Connect(
 				function(input)
+				    if localuivalue ~= _G.run_ui then return end
 					if input.UserInputType == Enum.UserInputType.MouseButton1 then
 						if HueInput then
 							HueInput:Disconnect()
@@ -2253,6 +2303,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 
 			ToggleBtn.MouseButton1Down:Connect(
 				function()
+				    if localuivalue ~= _G.run_ui then return end
 					RainbowColorPicker = not RainbowColorPicker
 
 					if ColorInput then
@@ -2284,6 +2335,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 							HueSelection.Position = UDim2.new(0.48, 0, 0, Flux.HueSelectionPosition)
 
 							callback( BoxColor.BackgroundColor3)
+							if _G.reloadingui == true then break end
 							wait()
 						end
 					elseif not RainbowColorPicker then
@@ -2307,6 +2359,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 
 			Confirm.MouseButton1Click:Connect(
 				function()
+				    if localuivalue ~= _G.run_ui then return end
 					ColorPickerToggled = not ColorPickerToggled
 					Colorpicker:TweenSize(UDim2.new(0, 457, 0, 43), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
 					TweenService:Create(
@@ -2521,6 +2574,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 			
 			TextBox.FocusLost:Connect(
 				function(ep)
+				    if localuivalue ~= _G.run_ui then return end
 					if ep then
 						if #TextBox.Text > 0 then
 							callback( TextBox.Text)
@@ -2534,6 +2588,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 			
 			ArrowBtn.MouseButton1Click:Connect(function()
 				if TextboxDescToggled == false then
+				    if localuivalue ~= _G.run_ui then return end
 					Textbox:TweenSize(UDim2.new(0, 457, 0, 81), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .6, true)
 					TweenService:Create(
 						Title,
@@ -2705,6 +2760,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 			BindLabel.TextXAlignment = Enum.TextXAlignment.Right
 			
 			Bind.MouseEnter:Connect(function()
+			    if localuivalue ~= _G.run_ui then return end
 				TweenService:Create(
 					Title,
 					TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -2713,6 +2769,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 			end)
 
 			Bind.MouseLeave:Connect(function()
+			    if localuivalue ~= _G.run_ui then return end
 				TweenService:Create(
 					Title,
 					TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -2722,6 +2779,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 
 			Bind.MouseButton1Click:connect(
 				function()
+				    if localuivalue ~= _G.run_ui then return end
 					TweenService:Create(
 						Title,
 						TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
@@ -2793,6 +2851,7 @@ function Flux:Window(text, bottom,mainclr,themeclr,toclose)
 
 			game:GetService("UserInputService").InputBegan:connect(
 			function(current, pressed)
+			    if localuivalue ~= _G.run_ui then return end
 				if not pressed then
 					if current.KeyCode.Name == Key then
 						callback(Key)
