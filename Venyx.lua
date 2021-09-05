@@ -236,6 +236,22 @@ do
             game.CoreGui:FindFirstChild(title..id):Destroy()
         end
         function library:Del()
+            for i,v in pairs(game.CoreGui:FindFirstChild(title..id):GetDescendants()) do
+                spawn(function()
+                    pcall(function()
+                        for i = 0.01,1,0.05 do
+                            if v["Transparency"] then
+                                v.Transparency = v.Transparency + 0.075
+                            end
+                            if v["ImageTransparency"] then
+                                v.ImageTransparency = v.ImageTransparency + 0.075
+                            end
+                            game:GetService('RunService').RenderStepped:Wait()
+                        end
+                    end)
+                end)
+            end
+            wait(game:GetService('RunService').RenderStepped:Wait()*(1/0.05))
 	        game.CoreGui:FindFirstChild(title..id):Destroy()
         end
 		local container = utility:Create("ScreenGui", {
