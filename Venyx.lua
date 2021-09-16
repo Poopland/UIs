@@ -2150,6 +2150,9 @@ do
 		end
 			
 		for i, value in pairs(list or {}) do
+			if type(value) ~= "string" then
+				value = value.Name
+			end
 			local button = utility:Create("ImageButton", {
 				Parent = dropdown.List.Frame,
 				BackgroundTransparency = 1,
