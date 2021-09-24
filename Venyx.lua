@@ -514,6 +514,7 @@ do
 		if self.position then
             if quick or container.Visible == false then
                 container.Visible = true
+                self.toggling = false
                 return
             end
 			utility:Tween(container, {
@@ -530,6 +531,7 @@ do
 		else
             if quick then
                 container.Visible = false
+                self.toggling = false
                 return
             end
 			self.position = container.Position
