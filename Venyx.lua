@@ -512,8 +512,12 @@ do
 		local topbar = container.TopBar
 		
 		if self.position then
-            if quick or container.Visible == false then
-                container.Visible = true
+            if quick then
+                container.Size = UDim2.new(0, 511, 0, 428)
+                container.Position = self.position
+                container.ClipsDescendants = false
+                topbar.Size = UDim2.new(1, 0, 0, 38)
+                self.position = nil
                 self.toggling = false
                 return
             end
@@ -530,7 +534,11 @@ do
 			self.position = nil
 		else
             if quick then
-                container.Visible = false
+                self.position = container.Position
+                container.Size = UDim2.new(0, 511, 0, 0)
+                container.Position = self.position + UDim2.new(0, 0, 0, 428)
+                container.ClipsDescendants = true
+                topbar.Size = UDim2.new(1, 0, 1, 0)
                 self.toggling = false
                 return
             end
