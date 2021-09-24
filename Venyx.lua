@@ -500,7 +500,7 @@ do
 		end
 	end
 	
-	function library:toggle()
+	function library:toggle(quick)
 	
 		if self.toggling then
 			return
@@ -512,6 +512,10 @@ do
 		local topbar = container.TopBar
 		
 		if self.position then
+            if quick or container.Visible == false then
+                container.Visible = true
+                return
+            end
 			utility:Tween(container, {
 				Size = UDim2.new(0, 511, 0, 428),
 				Position = self.position
@@ -524,6 +528,10 @@ do
 			container.ClipsDescendants = false
 			self.position = nil
 		else
+            if quick then
+                container.Visible = false
+                return
+            end
 			self.position = container.Position
 			container.ClipsDescendants = true
 			
