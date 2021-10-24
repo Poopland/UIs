@@ -1664,6 +1664,7 @@ end
         func(Win11Lib.flags.toggles[flag])
       end
       toggle_2.MouseButton1Click:Connect(toggleF)
+      toggle.MouseButton1Click:Connect(toggleF)
     end
     sideBarContainer.CanvasSize = UDim2.new(0,0,0,sideBarContainer.UIListLayout.AbsoluteContentSize.Y+6)
     return options
