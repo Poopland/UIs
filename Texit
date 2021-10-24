@@ -1109,12 +1109,14 @@ end
         toggle = not toggle
         if toggle and (#dropdownBody.sectionContainer:GetChildren() - 1) > -1 then
           dropdownBody.chevron.Rotation = 90
-          dropdown.Size = UDim2.new(1,0,0,((#dropdownBody.sectionContainer:GetChildren() - 1) * 57) + 80)
-          settingContainer.CanvasSize = UDim2.new(0,0,0,((settingContainer.CanvasSize.Y.Offset + dropdown.Size.Y.Offset)-69))
+          local Size = UDim2.new(1,0,0,((#dropdownBody.sectionContainer:GetChildren() - 1) * 57) + 80)
+          local Size2 = settingContainer.CanvasPosition
+          TweenSize(dropdown,Size,0.1)
+          game.TweenService:Create(settingContainer,TweenInfo.new(0.15,Enum.EasingStyle.Sine,Enum.EasingDirection.Out,0,false),{CanvasSize = UDim2.new(0,0,0,((settingContainer.CanvasSize.Y.Offset + Size.Y.Offset)-69)),CanvasPosition = Vector2.new(0,Size2.Y+Size.Y.Offset)}):Play()
         else
           dropdownBody.chevron.Rotation = 0
           settingContainer.CanvasSize = UDim2.new(0,0,0,(settingContainer.CanvasSize.Y.Offset - dropdown.Size.Y.Offset)+69)
-          dropdown.Size = UDim2.new(1,0,0,70)
+          TweenSize(dropdown,UDim2.new(1,0,0,70),0.1)
         end
       end)
     
@@ -1358,12 +1360,14 @@ end
         toggle = not toggle
         if toggle and (#dropdownBody.sectionContainer:GetChildren() - 1) > -1 then
           dropdownBody.chevron.Rotation = 90
-          dropdown.Size = UDim2.new(1,0,0,((#dropdownBody.sectionContainer:GetChildren() - 1) * 57) + 80)
-          settingContainer.CanvasSize = UDim2.new(0,0,0,((settingContainer.CanvasSize.Y.Offset + dropdown.Size.Y.Offset)-69))
+          local Size = UDim2.new(1,0,0,((#dropdownBody.sectionContainer:GetChildren() - 1) * 57) + 80)
+          local Size2 = settingContainer.CanvasPosition
+          TweenSize(dropdown,Size,0.1)
+          game.TweenService:Create(settingContainer,TweenInfo.new(0.15,Enum.EasingStyle.Sine,Enum.EasingDirection.Out,0,false),{CanvasSize = UDim2.new(0,0,0,((settingContainer.CanvasSize.Y.Offset + Size.Y.Offset)-69)),CanvasPosition = Vector2.new(0,Size2.Y+Size.Y.Offset)}):Play()
         else
           dropdownBody.chevron.Rotation = 0
           settingContainer.CanvasSize = UDim2.new(0,0,0,(settingContainer.CanvasSize.Y.Offset - dropdown.Size.Y.Offset)+69)
-          dropdown.Size = UDim2.new(1,0,0,70)
+          TweenSize(dropdown,UDim2.new(1,0,0,70),0.1)
         end
       end)
     
@@ -1649,11 +1653,11 @@ end
       	local accentColor = Color3.new(243, 128, 100)
     
         if Win11Lib.flags.toggles[flag] then
-          circle.Position = UDim2.new(0,24,0.5,0)
+          TweenPos(circle,UDim2.new(0,24,0.5,0),0.1)
           parent.ImageColor3 = Color3.fromRGB((accentColor.R - 48), (accentColor.G - 48), (accentColor.B - 48))
           circle.ImageColor3 = Color3.fromRGB(accentColor.R,accentColor.G,accentColor.B)
         else
-          circle.Position = UDim2.new(0,4,0.5,0)
+          TweenPos(circle,UDim2.new(0,4,0.5,0),0.1)
           parent.ImageColor3 = Color3.fromRGB(158,158,158)
           circle.ImageColor3 = Color3.fromRGB(206,206,206)
         end
